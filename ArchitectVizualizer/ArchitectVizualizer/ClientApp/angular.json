@@ -132,5 +132,8 @@
       }
     }
   },
-  "defaultProject": "ArchitectVizualizer"
+  "defaultProject": "ArchitectVizualizer",
+  "cli": {
+    "analytics": false
+  }
 }
