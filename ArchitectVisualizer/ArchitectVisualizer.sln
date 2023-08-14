@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArchitectVizualizer", "ArchitectVizualizer\ArchitectVizualizer.csproj", "{8123C5A2-B791-462E-9A60-155F6BE0BCEF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArchitectVisualizer", "ArchitectVisualizer\ArchitectVisualizer.csproj", "{8123C5A2-B791-462E-9A60-155F6BE0BCEF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -431,4 +431,4 @@ $RECYCLE.BIN/
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
-ArchitectVizualizer/ArchitectVizualizer/ClientApp/.angular/cache/
+ArchitectVisualizer/ArchitectVisualizer/ClientApp/.angular/cache/

@@ -1,1 +1,1 @@
-# ArchitectVizualizer
+# ArchitectVisualizer

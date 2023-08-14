@@ -1,4 +1,4 @@
-namespace ArchitectVizualizer;
+namespace ArchitectVisualizer;
 
 public class WeatherForecast
 {

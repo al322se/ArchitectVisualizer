@@ -12,16 +12,16 @@ RUN curl -fsSL https://deb.nodesource.com/setup_14.x | bash - \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /src
-COPY ["ArchitectVizualizer/ArchitectVizualizer.csproj", "ArchitectVizualizer/"]
-RUN dotnet restore "ArchitectVizualizer/ArchitectVizualizer.csproj"
+COPY ["ArchitectVisualizer/ArchitectVisualizer.csproj", "ArchitectVisualizer/"]
+RUN dotnet restore "ArchitectVisualizer/ArchitectVisualizer.csproj"
 COPY . .
-WORKDIR "/src/ArchitectVizualizer"
-RUN dotnet build "ArchitectVizualizer.csproj" -c Release -o /app/build
+WORKDIR "/src/ArchitectVisualizer"
+RUN dotnet build "ArchitectVisualizer.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "ArchitectVizualizer.csproj" -c Release -o /app/publish
+RUN dotnet publish "ArchitectVisualizer.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "ArchitectVizualizer.dll"]
+ENTRYPOINT ["dotnet", "ArchitectVisualizer.dll"]

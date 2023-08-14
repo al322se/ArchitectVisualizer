@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "ArchitectVizualizer": {
+    "ArchitectVisualizer": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:application": {
@@ -72,10 +72,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "ArchitectVizualizer:build:production"
+              "browserTarget": "ArchitectVisualizer:build:production"
             },
             "development": {
-              "browserTarget": "ArchitectVizualizer:build:development",
+              "browserTarget": "ArchitectVisualizer:build:development",
               "proxyConfig": "proxy.conf.js"
             }
           },
@@ -84,7 +84,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "ArchitectVizualizer:build"
+            "browserTarget": "ArchitectVisualizer:build"
           }
         },
         "test": {
@@ -132,7 +132,7 @@
       }
     }
   },
-  "defaultProject": "ArchitectVizualizer",
+  "defaultProject": "ArchitectVisualizer",
   "cli": {
     "analytics": false
   }
