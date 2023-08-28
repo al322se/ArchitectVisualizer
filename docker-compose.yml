@@ -2,40 +2,125 @@ version: '3.4'
 
 services:
 
-  webapp:
+  architect-visualizer:
     build:
-      context: ArchitectVisualizer/
-      dockerfile: ArchitectVisualizer/ArchitectVisualizer/Dockerfile
+      context: ArchitectVisualizer
+      dockerfile: ArchitectVisualizer/Dockerfile
     ports:
       - "555:80"
 
   zookeeper:
-    image: zookeeper:3.6.3
-    ports:
-      - "2181:2181"
+    image: confluentinc/cp-zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+  zookeeper_2:
+    image: confluentinc/cp-zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+  zookeeper_3:
+    image: confluentinc/cp-zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
 
   kafka:
-    image: confluentinc/cp-kafka:6.2.1
-    ports:
-      - "9092:9092"
+    image: confluentinc/cp-kafka
     depends_on:
       - zookeeper
+    ports:
+      - 9092:9092
     environment:
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+      KAFKA_BROKER_ID: 0
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT, PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092, PLAINTEXT_HOST://localhost:9092
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ZOOKEEPER_CONNECTION_TIMEOUT_MS: 18000
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-
-  kafka-manager:
-    image: hlebalbau/kafka-manager:3.0.0.5
-    ports:
-      - "9000:9000"
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_AUTHORIZER_CLASS_NAME: kafka.security.authorizer.AclAuthorizer
+      KAFKA_SUPER_USERS: "User:ANONYMOUS"
+  kafka_2:
+    image: confluentinc/cp-kafka
+    depends_on:
+      - zookeeper_2
     environment:
-      ZK_HOSTS: "zookeeper:2181"
-      APPLICATION_SECRET: "random-secret"
-  
-  kafka-topics-ui:
-    image: landoop/kafka-topics-ui:0.9.4
-    ports:
-      - "8000:8000"
+      KAFKA_BROKER_ID: 0
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka_2:29092
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper_2:2181
+      KAFKA_ZOOKEEPER_CONNECTION_TIMEOUT_MS: 18000
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_AUTHORIZER_CLASS_NAME: kafka.security.authorizer.AclAuthorizer
+      KAFKA_SUPER_USERS: "User:ANONYMOUS"
+  kafka_3:
+    image: confluentinc/cp-kafka
+    depends_on:
+      - zookeeper_3
     environment:
-      KAFKA_REST_PROXY_URL: "http://kafka:8082"
-
+      KAFKA_BROKER_ID: 0
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka_3:29092
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper_3:2181
+      KAFKA_ZOOKEEPER_CONNECTION_TIMEOUT_MS: 18000
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_AUTHORIZER_CLASS_NAME: kafka.security.authorizer.AclAuthorizer
+      KAFKA_SUPER_USERS: "User:ANONYMOUS"
+      
+  schema-registry:
+    image: confluentinc/cp-schema-registry
+    depends_on:
+      - zookeeper
+      - kafka
+    ports:
+      - 8082:8082
+    volumes:
+      - ./conf:/conf
+    environment:
+      SCHEMA_REGISTRY_HOST_NAME: schema-registry
+      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: PLAINTEXT://kafka:29092
+      SCHEMA_REGISTRY_LISTENERS: http://0.0.0.0:8082
+      SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: zookeeper:2181
+      SCHEMA_REGISTRY_AUTHENTICATION_METHOD: BASIC
+      SCHEMA_REGISTRY_AUTHENTICATION_REALM: SchemaRegistry
+      SCHEMA_REGISTRY_AUTHENTICATION_ROLES: Testers
+      SCHEMA_REGISTRY_OPTS: -Djava.security.auth.login.config=/conf/schema-registry/schema-registry.jaas
+  schema-registry_2:
+    image: confluentinc/cp-schema-registry
+    depends_on:
+      - zookeeper_2
+      - kafka_2
+    ports:
+      - 8081:8081
+    environment:
+      SCHEMA_REGISTRY_HOST_NAME: schema-registry
+      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: PLAINTEXT://kafka_2:29092
+      SCHEMA_REGISTRY_LISTENERS: http://0.0.0.0:8081
+      SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: zookeeper_2:2181
+  schema-registry_3:
+    image: confluentinc/cp-schema-registry
+    depends_on:
+      - zookeeper_3
+      - kafka_3
+    ports:
+      - 8083:8083
+    environment:
+      SCHEMA_REGISTRY_HOST_NAME: schema-registry
+      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: PLAINTEXT://kafka_3:29092
+      SCHEMA_REGISTRY_LISTENERS: https://0.0.0.0:8083
+      SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: zookeeper_3:2181
+      SCHEMA_REGISTRY_SSL_KEYSTORE_LOCATION: /etc/schema-registry/secrets/schema-registry.keystore.jks
+      SCHEMA_REGISTRY_SSL_KEYSTORE_PASSWORD: cnf123
+      SCHEMA_REGISTRY_SSL_TRUSTSTORE_LOCATION: /etc/schema-registry/secrets/schema-registry.truststore.jks
+      SCHEMA_REGISTRY_SSL_TRUSTSTORE_PASSWORD: cnf123
+      SCHEMA_REGISTRY_SSL_KEY_PASSWORD: cnf123
+      SCHEMA_REGISTRY_SCHEMA_REGISTRY_INTER_INSTANCE_PROTOCOL: https
+      SCHEMA_REGISTRY_SSL_CLIENT_AUTH: 'true'
+    volumes:
+      - ./secrets:/etc/schema-registry/secrets
