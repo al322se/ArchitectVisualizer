@@ -1,0 +1,41 @@
+version: '3.4'
+
+services:
+
+  webapp:
+    build:
+      context: ArchitectVisualizer/
+      dockerfile: ArchitectVisualizer/ArchitectVisualizer/Dockerfile
+    ports:
+      - "555:80"
+
+  zookeeper:
+    image: zookeeper:3.6.3
+    ports:
+      - "2181:2181"
+
+  kafka:
+    image: confluentinc/cp-kafka:6.2.1
+    ports:
+      - "9092:9092"
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+
+  kafka-manager:
+    image: hlebalbau/kafka-manager:3.0.0.5
+    ports:
+      - "9000:9000"
+    environment:
+      ZK_HOSTS: "zookeeper:2181"
+      APPLICATION_SECRET: "random-secret"
+  
+  kafka-topics-ui:
+    image: landoop/kafka-topics-ui:0.9.4
+    ports:
+      - "8000:8000"
+    environment:
+      KAFKA_REST_PROXY_URL: "http://kafka:8082"
+
