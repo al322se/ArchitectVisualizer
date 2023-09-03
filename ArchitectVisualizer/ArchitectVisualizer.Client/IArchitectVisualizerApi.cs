@@ -5,6 +5,6 @@ namespace ArchitectVisualizer.Client;
 
 public interface IArchitectVisualizerApi
 {
-    [Post("/users/{user}")]
-    Task GetUser(ServiceModel serviceModel);
+    [Post("/models")]
+    Task SetServiceModel(ServiceModel serviceModel);
 }

@@ -1,24 +1,32 @@
 using Confluent.Kafka;
+using Microsoft.Extensions.Options;
 
 namespace ExampleConsumer;
 
 public class KafkaConsumer : IHostedService
 {
-    public Task StartAsync(CancellationToken cancellationToken)
+    private readonly KafkaOptions _options;
+
+    public KafkaConsumer(IOptions<KafkaOptions> options)
+        => _options = options.Value;
+
+    public async Task StartAsync(CancellationToken cancellationToken)
     {
-   
+        await RunConsume(_options.BrokerList!, _options.Topics!.Split(","), _options.GroupId!, cancellationToken);
     }
 
     public Task StopAsync(CancellationToken cancellationToken)
-        => throw new NotImplementedException();
-    
-    
-    public static void RunConsume(string brokerList, List<string> topics,string groupId, CancellationToken cancellationToken)
+    {
+        return Task.CompletedTask;
+    }
+
+
+    private static Task RunConsume(string brokerList, IEnumerable<string> topics,string groupId, CancellationToken cancellationToken)
     {
         var config = new ConsumerConfig
         {
             BootstrapServers = brokerList,
-            GroupId = "csharp-consumer",
+            GroupId = groupId,
             EnableAutoOffsetStore = false,
             EnableAutoCommit = true,
             StatisticsIntervalMs = 5000,
@@ -119,5 +127,7 @@ public class KafkaConsumer : IHostedService
                 consumer.Close();
             }
         }
+
+        return Task.CompletedTask;
     }
 }

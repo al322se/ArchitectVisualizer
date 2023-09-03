@@ -43,6 +43,6 @@ namespace KafkaProducer
                 await Task.Delay(500);
             }
         }
-        }
+    }
 
 }

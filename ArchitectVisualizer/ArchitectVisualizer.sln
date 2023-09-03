@@ -2,6 +2,20 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArchitectVisualizer", "ArchitectVisualizer\ArchitectVisualizer.csproj", "{8123C5A2-B791-462E-9A60-155F6BE0BCEF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArchitectVisualizer.Common", "ArchitectVisualizer.Common\ArchitectVisualizer.Common.csproj", "{E92E9296-4411-4199-93B3-234B1574C312}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArchitectVisualizer.Client", "ArchitectVisualizer.Client\ArchitectVisualizer.Client.csproj", "{F5F3FD51-F629-4A25-A0A9-F71E0A8414BA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ExampleServices", "ExampleServices", "{BDA6A37D-7DCB-4F2D-88A5-60EE0E54E714}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KafkaConsumer", "ExampleServices\KafkaConsumer\KafkaConsumer.csproj", "{872CE1EC-10F8-47E7-B811-66D2C84E7B9E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KafkaProducer", "ExampleServices\KafkaProducer\KafkaProducer.csproj", "{43454935-9CAB-484F-BB81-E79812F073F8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExampleConsumer", "ExampleServices\ExampleConsumer\ExampleConsumer.csproj", "{65DADC36-8565-47F0-A885-2A11E5594197}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExampleProducer", "ExampleServices\ExampleProducer\ExampleProducer.csproj", "{22FDBE77-EDEC-4093-87C5-E06F88BFDC15}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +26,35 @@ Global
 		{8123C5A2-B791-462E-9A60-155F6BE0BCEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8123C5A2-B791-462E-9A60-155F6BE0BCEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8123C5A2-B791-462E-9A60-155F6BE0BCEF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E92E9296-4411-4199-93B3-234B1574C312}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E92E9296-4411-4199-93B3-234B1574C312}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E92E9296-4411-4199-93B3-234B1574C312}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E92E9296-4411-4199-93B3-234B1574C312}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5F3FD51-F629-4A25-A0A9-F71E0A8414BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5F3FD51-F629-4A25-A0A9-F71E0A8414BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5F3FD51-F629-4A25-A0A9-F71E0A8414BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5F3FD51-F629-4A25-A0A9-F71E0A8414BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{872CE1EC-10F8-47E7-B811-66D2C84E7B9E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{872CE1EC-10F8-47E7-B811-66D2C84E7B9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{872CE1EC-10F8-47E7-B811-66D2C84E7B9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{872CE1EC-10F8-47E7-B811-66D2C84E7B9E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{43454935-9CAB-484F-BB81-E79812F073F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43454935-9CAB-484F-BB81-E79812F073F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43454935-9CAB-484F-BB81-E79812F073F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43454935-9CAB-484F-BB81-E79812F073F8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65DADC36-8565-47F0-A885-2A11E5594197}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65DADC36-8565-47F0-A885-2A11E5594197}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65DADC36-8565-47F0-A885-2A11E5594197}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65DADC36-8565-47F0-A885-2A11E5594197}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22FDBE77-EDEC-4093-87C5-E06F88BFDC15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22FDBE77-EDEC-4093-87C5-E06F88BFDC15}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22FDBE77-EDEC-4093-87C5-E06F88BFDC15}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22FDBE77-EDEC-4093-87C5-E06F88BFDC15}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{872CE1EC-10F8-47E7-B811-66D2C84E7B9E} = {BDA6A37D-7DCB-4F2D-88A5-60EE0E54E714}
+		{43454935-9CAB-484F-BB81-E79812F073F8} = {BDA6A37D-7DCB-4F2D-88A5-60EE0E54E714}
+		{65DADC36-8565-47F0-A885-2A11E5594197} = {BDA6A37D-7DCB-4F2D-88A5-60EE0E54E714}
+		{22FDBE77-EDEC-4093-87C5-E06F88BFDC15} = {BDA6A37D-7DCB-4F2D-88A5-60EE0E54E714}
 	EndGlobalSection
 EndGlobal
