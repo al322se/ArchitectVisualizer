@@ -1,4 +1,5 @@
 using ArchitectVisualizer.Client;
+using Microsoft.Extensions.Options;
 
 namespace ExampleConsumer;
 
@@ -14,20 +15,14 @@ public static class ServiceCollectionExtensions
 
             .Configure<ExampleAppOptions>(configuration.GetSection(nameof(ExampleAppOptions)));
 
+
+        services.RegisterArchitectVisualizer(configuration, (sp,visualizer) =>
+        {
+            var options = sp.GetRequiredService<IOptions<KafkaOptions>>();
+            visualizer.AddCurrentService(nameof(ExampleConsumer)).AddToQueue(options.Value.Topics!);
+        });
         services.AddHostedService<KafkaConsumer>();
-        services.RegisterArchitectVisualizer(configuration);
-        services.AddHostedService<ArchitectVisualizerRegistrar>();
+
         return services;
     }
-
-
-}
-
-public class ArchitectVisualizerRegistrar : IHostedService
-{
-    public Task StartAsync(CancellationToken cancellationToken)
-        => throw new NotImplementedException();
-
-    public Task StopAsync(CancellationToken cancellationToken)
-        => throw new NotImplementedException();
 }

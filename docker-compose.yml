@@ -2,12 +2,12 @@ version: '3.4'
 
 services:
 
-  architect-visualizer:
-    build:
-      context: ArchitectVisualizer
-      dockerfile: ArchitectVisualizer/Dockerfile
-    ports:
-      - "555:80"
+  # architect-visualizer:
+  #   build:
+  #     context: ArchitectVisualizer
+  #     dockerfile: ArchitectVisualizer/Dockerfile
+  #   ports:
+  #     - "555:80"
 
   zookeeper:
     image: confluentinc/cp-zookeeper

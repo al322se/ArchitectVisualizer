@@ -1,9 +1,12 @@
+using ArchitectVisualizer.Controllers;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllersWithViews();
-
+builder.Services.AddSingleton<ModelsStore>();
+builder.Services.AddSingleton<GraphVizGenerator>();
 var app = builder.Build();
 
 

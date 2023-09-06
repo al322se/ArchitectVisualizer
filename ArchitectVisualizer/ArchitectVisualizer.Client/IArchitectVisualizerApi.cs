@@ -6,5 +6,5 @@ namespace ArchitectVisualizer.Client;
 public interface IArchitectVisualizerApi
 {
     [Post("/models")]
-    Task SetServiceModel(ServiceModel serviceModel);
+    Task SetServiceModel(RegisterModel registerModel);
 }
