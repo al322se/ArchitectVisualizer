@@ -1,5 +1,4 @@
-﻿using System.Security.Cryptography.X509Certificates;
-
+﻿#pragma warning disable CS8618
 namespace ArchitectVisualizer.Common;
 public class RegisterModel
 {

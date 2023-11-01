@@ -9,13 +9,9 @@ public static class ServiceCollectionExtensions
     {
         services
             .Configure<ArchitectVisualizerOptions>(configuration.GetSection(nameof(ArchitectVisualizerOptions)));
-
         services
             .Configure<KafkaOptions>(configuration.GetSection(nameof(KafkaOptions)))
-
             .Configure<ExampleAppOptions>(configuration.GetSection(nameof(ExampleAppOptions)));
-
-
         services.RegisterArchitectVisualizer(configuration, (sp,visualizer) =>
         {
             var options = sp.GetRequiredService<IOptions<KafkaOptions>>();

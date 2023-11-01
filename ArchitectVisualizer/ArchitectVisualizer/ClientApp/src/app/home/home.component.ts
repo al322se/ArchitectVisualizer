@@ -7,17 +7,16 @@ import { HttpClient } from '@angular/common/http';
 })
 export class HomeComponent implements OnInit {
 
-  public graphText: string="";
+  public graphText: string = "";
+  private _baseUrl: string;
 
-  constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
-    http.get<GraphResult>(baseUrl + 'graph').subscribe(result => {
-      this.graphText = result.text;
-    }, error => console.error(error));
+  constructor(private http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
+    this._baseUrl = baseUrl;
   }
 
   ngOnInit() {
-
-      graphviz('#graph').renderDot(this.graphText);
+    let result = this.http.get<GraphResult>(this._baseUrl + 'graph');
+    result.subscribe((data: GraphResult) => graphviz('#graph').renderDot(data.text));
   }
 }
 interface GraphResult {

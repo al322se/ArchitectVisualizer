@@ -1,11 +1,12 @@
 namespace ArchitectVisualizer.Common;
 
-public  class Visualizer
+public class Visualizer
 {
     private readonly RegisterModel _model = new RegisterModel();
+
     public Visualizer AddCurrentService(string serviceName)
     {
-        _model.CurrentService = new NodeModel(){Type = ModelType.Current};
+        _model.CurrentService = new NodeModel() { Type = ModelType.Current };
         _model.CurrentService.Name = serviceName;
         return this;
     }
